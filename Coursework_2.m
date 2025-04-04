@@ -7,13 +7,13 @@
 clear
 clc
 
-a = arduino("COM3","Uno");
+a = arduino("COM3","Uno"); % establish communication with arduino and matlab
 
-for i = 1:10
-writeDigitalPin(a,'D5',1)
-pause(0.5);
-writeDigitalPin(a, 'D5',0)
-pause(0.5);
+for i = 1:10 % blinks led 10 times
+writeDigitalPin(a,'D5',1) % turns led on
+pause(0.5); % pauses for 0.5 seconds
+writeDigitalPin(a, 'D5',0) % turns led off
+pause(0.5); % pauses for 0.5 seconds
 end
 
 
@@ -21,6 +21,62 @@ end
 %% TASK 1 - READ TEMPERATURE DATA, PLOT, AND WRITE TO A LOG FILE [20 MARKS]
 
 % Insert answers here
+
+clear
+clc
+clf
+
+a = arduino(); % establish communication with arduino and matlab
+sensorPin = 'A0'; % sensor pin used for temp sensor
+duration = 600; % duration of 600 seconds
+timeInterval = 1; % will check temp every second
+readingsNum = 600; % 600 readings of temp as checking every second
+
+temp = zeros(1,readingsNum); % array of 600 zeros to be filled 
+time = 0:timeInterval:(duration-1); % gets 600 data points as 0 will be counted
+
+TC = 0.01; % temp coefficient of 10mV/C
+V0C = 0.5; % 500mV voltage at 0C
+
+disp('Starting data acquisition...')
+for t = 1:numReadings
+    voltage = readVoltage(a, sensorPin);
+    temp(t) = (voltage - V0C) / TC;
+    pause(timeInterval);
+end
+
+disp('Data acquisition finished.')
+
+minTemp = min(temp);
+maxTemp = max(temp);
+avgTemp = mean(temp);
+
+figure;
+plot(time/60, temp, 'b-', 'LineWidth',2);
+xlabel('Time (mins)');
+ylabel('Temperature (°C)');
+title('Temperature against Time');
+grid on;
+
+dateStr = input('What date is it today? (use the format dd/mm/yyyy): ', 's');
+locationStr = input('Where are you located?: ', 's');
+
+fprintf('Data Logging Initated - %s\n', dateStr);
+fprintf('Location - %s\n\n', locationStr);
+
+for t = 0:10
+    minuteInterval = (t*60) + 1;
+    fprintf('Minute %2d\n', t);
+    fprintf('Temperature %2.f C\n\n', temp(minuteInterval));
+end
+
+fprintf('Max temp %.2f C\n', maxTemp);
+fprintf('Min temp %.2f C\n\n', minTemp);
+fprintf('Average temp %.2f C\n\n', avgTemp);
+fprintf('Data logging terminated\n');
+
+fileID = fopen()
+
 
 %% TASK 2 - LED TEMPERATURE MONITORING DEVICE IMPLEMENTATION [25 MARKS]
 
