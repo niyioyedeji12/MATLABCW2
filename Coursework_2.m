@@ -24,17 +24,17 @@ end
 
 clear
 clc
-clf
+clf 
 
 a = arduino("COM3","Uno"); % establish communication with arduino and matlab
 sensorPin = 'A0'; % sensor pin used for temp sensor
 duration = 600; % duration of 600 seconds
 timeInterval = 1; % will check temp every second
-readingsNum = 600; % 600 readings of temp as checking every second
+readingsNum = duration + 1; % 601 readings of temp as checking every second
 
 temp = zeros(1,readingsNum); % array of 600 zeros to be filled 
 voltage = zeros(1,readingsNum); % array of 600 zeros to be filled
-time = 0:timeInterval:(duration-1); % gets 600 data points as 0 will be counted
+time = 0:timeInterval:duration; % gets 600 data points as 0 will be counted
 
 TC = 0.01; % temp coefficient of 10mV/C
 V0C = 0.5; % 500mV voltage at 0C
@@ -54,7 +54,7 @@ avgTemp = mean(temp);
 
 figure;
 plot(time, temp, 'b-', 'LineWidth', 1.5);
-xlabel('Time (mins)');
+xlabel('Time (s)');
 ylabel('Temperature (°C)');
 title('Temperature vs Time');
 grid on;
@@ -67,7 +67,7 @@ fprintf('Location - %s\n\n', locationStr);
 for t = 0:10
     minuteInterval = (t*60) + 1;
     fprintf('Minute %2d\n', t);
-    fprintf('Temperature %2.f C\n\n', temp(minuteInterval));
+    fprintf('Temperature %.2f C\n\n', temp(minuteInterval));
 end
 
 fprintf('Max temp %.2f C\n', maxTemp);
@@ -81,9 +81,9 @@ fprintf(fileID, 'Data logging initiated - %s\n', dateStr);
 fprintf(fileID, 'Location - %s\n\n', locationStr);
 
 for t = 0:10
-    minuteInterval = (t * 60) + 1;
+    minuteInterval = (t * 60) + 1; 
     fprintf(fileID, 'Minute %2d\n', t);
-    fprintf(fileID, 'Temperature %.2f C\n\n', temperature(minuteInterval));
+    fprintf(fileID, 'Temperature %.2f C\n\n', temp(minuteInterval));
 end
 
 fprintf(fileID, 'Max temp %.2f C\n', maxTemp);
