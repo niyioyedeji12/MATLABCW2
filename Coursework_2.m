@@ -95,7 +95,12 @@ fclose(fileID); % Close the file
 
 
 %% TASK 2 - LED TEMPERATURE MONITORING DEVICE IMPLEMENTATION [25 MARKS]
+clear
+clc
+clf
 
+a = arduino("COM3","Uno");
+temp_monitor(a);
 % Insert answers here
 
 
