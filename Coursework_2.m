@@ -108,6 +108,9 @@ temp_monitor(a);
 
 % Insert answers here
 
+clear
+clc
+clf
 
 %% TASK 4 - REFLECTIVE STATEMENT [5 MARKS]
 
