@@ -1,4 +1,3 @@
-
 function temp_monitor(a)
     % This is a function for monitoring temperature and controlling LEDs.
     % This function reads the temperature from the thermistor and controls
