@@ -21,13 +21,13 @@ configurePin(a, redLED, 'DigitalOutput');
 % constants
 V0C = 0.5;       % voltage at 0°C
 TC = 0.01;       % 10 mV per °C
-bufferSize = 60; % 60 seconds = 1 minute
+cycleTime = 60; % 1 minute
 
 % data storage
-temps = zeros(1, bufferSize);
+temps = zeros(1, cycleTime);
 i = 1;
 
-disp('starting temperature monitoring and prediction...');
+disp('Starting temperature monitoring and prediction...');
 
 while 1
     % read and convert to °C
@@ -35,18 +35,18 @@ while 1
     currentTemp = (voltage - V0C) / TC;
 
     % display current temperature
-    disp(['current temperature: ', num2str(currentTemp), '°c']);
+    disp(['Current temperature: ', num2str(currentTemp), '°c']);
 
     % store reading in buffer
     temps(i) = currentTemp;
 
     % only calculate rate after 60 readings
-    if i == bufferSize
+    if i == cycleTime
         tempStart = temps(1);
         tempEnd = temps(end);
-        rate = (tempEnd - tempStart) / (bufferSize - 1); % °C/s
+        rate = (tempEnd - tempStart) / (cycleTime - 1); % °C/s (derivative of data)
 
-        % predict future temp (300 seconds = 5 mins)
+        % predict future temp in 5 mins
         predictedTemp = currentTemp + rate * 300;
 
         % show results
@@ -71,7 +71,7 @@ while 1
             writeDigitalPin(a, redLED, 0);
         end
 
-        % shift buffer to start again
+        % cycle to start again
         i = 1;
     else
         i = i + 1;
