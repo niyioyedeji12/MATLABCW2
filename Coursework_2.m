@@ -93,6 +93,11 @@ fprintf(fileID, 'Data logging terminated\n');
 
 fclose(fileID); % Close the file
 
+checkID = fopen('cabin_temperature.txt', 'r');
+fileContents = fread(checkID, '*char')'; % read all as characters
+fclose(checkID);
+disp('cabin_temperature.txt:');
+disp(fileContents);
 
 %% TASK 2 - LED TEMPERATURE MONITORING DEVICE IMPLEMENTATION [25 MARKS]
 
