@@ -127,6 +127,14 @@ temp_prediction(a);
 
 % Insert reflective statement here (400 words max)
 
+% This project was my first time using MATLAB combined with an Arduino to monitor cabin temperature, and it was both tough and rewarding to complete the tasks and see my code work. 
+% Task 1 was about reading the thermistor, converting voltages to temperatures, and plotting data. Getting the log file format right with sprintf and fprintf was hard and took many tries and understanding how to use the file function took some work and research. 
+% For Task 2, I wrote a temp_monitor.m function to control LEDs and show a live graph. Making the LEDs blink at the right times (0.5s for yellow, 0.25s for red) and updating the plot with drawnow was easy to do but took a bit of work to get the timing right with the pause time.
+% Task 3’s temp_prediction.m function calculated how fast the temperature changed and predicted future values. Noisy data was a problem, so I used a simple average to smooth it out. I initially calculated the rate every second but I ended up getting extreme predictions, so I changed the cycle to be one minute and got better results.
+% The biggest challenge was building the circuits for Tasks 2 and 3. I didn’t know how to ground three LEDs with only two wires, which confused me for a bit. I finally connected two LED cathodes in series and it worked.
+% I also struggled a lot with saving using github as very often despite committing changes, it would not save properly. I also got better at debugging MATLAB code, however, wiring circuits was where I struggled. In the future, I’d practice building circuits more to get faster write some test codes to better help verifying whether my code and circuit work.
+
+
 
 %% TASK 5 - COMMENTING, VERSION CONTROL AND PROFESSIONAL PRACTICE [15 MARKS]
 

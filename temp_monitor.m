@@ -40,7 +40,7 @@ function temp_monitor(a)
     plot([0, 600], [18, 18], 'g--', 'LineWidth', 2);  % green dashed line at 18°C
     plot([0, 600], [24, 24], 'r--', 'LineWidth', 2);  % red dashed line at 24°C
     while true
-        % read temperature from thermistor pin (Analog input)
+        % read temperature from thermistor pin 
         voltage = readVoltage(a, thermistorPin); % read voltage
         temperature = (voltage - V0C) / TC;    % convert to degrees celsius
         
@@ -95,7 +95,7 @@ function temp_monitor(a)
         % increment time for plotting
         time = time + 1;
         
-        % pause 0.1 second before reading the next value and updating the plot
+        % pause 1 second before reading the next value and updating the plot
         pause(1);
     end
 end

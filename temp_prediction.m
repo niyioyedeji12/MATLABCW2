@@ -1,13 +1,13 @@
 function temp_prediction(a)
 %  temp_prediction monitors and predicts temperature trends.
-%  this function reads the temperature from a thermistor every second,
-%  calculates the average rate of change over 60 seconds in °C/s,
+%  This function reads the temperature from a thermistor every second,
+%  Calculates the average rate of change over 60 seconds in °C/s,
 %  and predicts the temperature 5 minutes ahead.
-%  leds indicate:
+%  LEDs indicate:
 %  - green = stable,
 %  - red = heating too fast (>4°c/min),
 %  - yellow = cooling too fast (<-4°c/min).
-%  connect the thermistor to A0 and leds to D2 (green), D3 (yellow), D4 (red).
+
 
 % set up pins
 greenLED = 'D2';
@@ -37,7 +37,7 @@ while 1
     % display current temperature
     disp(['Current temperature: ', num2str(currentTemp), '°c']);
 
-    % store reading in buffer
+    % store reading in cycle time
     temps(i) = currentTemp;
 
     % only calculate rate after 60 readings
@@ -64,14 +64,41 @@ while 1
             writeDigitalPin(a, greenLED, 0);
             writeDigitalPin(a, yellowLED, 1);
             writeDigitalPin(a, redLED, 0);
-        else
-            % stable
+        elseif currentTemp > 18 && currentTemp < 24
+            % comfort temp inside stable rate
             writeDigitalPin(a, greenLED, 1);
             writeDigitalPin(a, yellowLED, 0);
             writeDigitalPin(a, redLED, 0);
+        else
+            % stable rate outside comfort range flash green
+            writeDigitalPin(a, greenLED, 1);
+            pause(0.5)
+             writeDigitalPin(a, greenLED, 0);
+            pause(0.5)
+             writeDigitalPin(a, greenLED, 1);
+            pause(0.5)
+             writeDigitalPin(a, greenLED, 0);
+            pause(0.5)
+             writeDigitalPin(a, greenLED, 1);
+            pause(0.5)
+             writeDigitalPin(a, greenLED, 0);
+            pause(0.5)
+             writeDigitalPin(a, greenLED, 1);
+            pause(0.5)
+             writeDigitalPin(a, greenLED, 0);
+              writeDigitalPin(a, greenLED, 1);
+            pause(0.5)
+             writeDigitalPin(a, greenLED, 0);
+            pause(0.5)
+             writeDigitalPin(a, greenLED, 1);
+            pause(0.5)
+             writeDigitalPin(a, greenLED, 0);
+            writeDigitalPin(a, yellowLED, 0);
+            writeDigitalPin(a, redLED, 0);
+
         end
 
-        % cycle to start again
+        % cycle start again
         i = 1;
     else
         i = i + 1;
