@@ -55,17 +55,17 @@ while 1
 
         % led control
         if rate > 0.0667
-            % heating too fast
+            % heating too fast -> constant red led
             writeDigitalPin(a, greenLED, 0);
             writeDigitalPin(a, yellowLED, 0);
             writeDigitalPin(a, redLED, 1);
         elseif rate < -0.0667
-            % cooling too fast
+            % cooling too fast -> constant yellow led
             writeDigitalPin(a, greenLED, 0);
             writeDigitalPin(a, yellowLED, 1);
             writeDigitalPin(a, redLED, 0);
         elseif currentTemp > 18 && currentTemp < 24
-            % comfort temp inside stable rate
+            % comfort temp inside stable rate -> constant green led
             writeDigitalPin(a, greenLED, 1);
             writeDigitalPin(a, yellowLED, 0);
             writeDigitalPin(a, redLED, 0);
